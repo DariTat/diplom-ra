@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import banner from '../img/banner.jpg';
 import { NavLink } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { deleteProduct, getProduct } from './BasketStorage';
+import BasketStorage from './BasketStorage';
 import { basketProducts } from '../redux/slice/basketListSlice';
 import { orderRequest } from '../redux/slice/orderSlice';
 import { Preloader } from './Preloader';
@@ -16,12 +16,12 @@ export const Basket = () => {
     
 
     useEffect(() => {
-        const product = getProduct()
+        const product = BasketStorage.getProduct()
         dispatch(basketProducts(product));
-    },[])
+    }, [])
 
     const handleDelete = (idSize) => {
-        const product = deleteProduct(idSize);
+        const product = BasketStorage.deleteProduct(idSize);
         dispatch(basketProducts(product));
     }
 
@@ -52,7 +52,7 @@ export const Basket = () => {
     }
     
     if (success) {
-        localStorage.setItem('basket', JSON.stringify([]));
+        BasketStorage.clear();
         return(
             <div className='order_success'>Заказ успешно оформлен</div>
         )
@@ -83,7 +83,7 @@ export const Basket = () => {
                         </thead>
                         <tbody>
                         {products.map((item, index) => 
-                            <tr>
+                            <tr key={item.id}>
                             <td scope="row">{index + 1}</td>
                             <td><NavLink  to={`/catalog/${item.id}`}>{item.title}</NavLink></td>
                             <td>{item.size}</td>
@@ -105,7 +105,7 @@ export const Basket = () => {
                     <section className="order">
                     <h2 className="text-center">Оформить заказ</h2>
                     <div className="card">
-                        <form className="card-body">
+                        <form className="card-body" onSubmit={handleSubmit}>
                             <div className="form-group">
                                 <label htmlFor="phone">Телефон</label>
                                 <input className="form-control" id="phone" value={data.phone} placeholder="Ваш телефон" onChange={handleChange}/>
@@ -118,7 +118,7 @@ export const Basket = () => {
                                 <input type="checkbox" className="form-check-input" id="agreement" required/>
                                 <label className="form-check-label" htmlFor="agreement">Согласен с правилами доставки</label>
                             </div>
-                            <button type="submit" className="btn btn-outline-secondary" onClick={handleSubmit}>Оформить</button>
+                            <button type="submit" className="btn btn-outline-secondary">Оформить</button>
                         </form>
                     </div>
                 </section>}

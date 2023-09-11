@@ -4,8 +4,9 @@ const initialState = {
     itemCatalog: [],
     loadingCatalog: true,
     errorCatalog: null,
-    activeCategorie: null,
+    categorieActive: 0,
     itemLength: null,
+    offset: 0,
     search: '',
     item: null,
     id: null,
@@ -36,11 +37,17 @@ export const catalogListSlice = createSlice({
         },
         getMore: (state, action) => {
             state.loadingCatalog = true;
-            state.activeCategorie = action.payload; 
+            const { payload, offset } = action.payload;
+            state.categorieActive = payload; 
+            state.offset = offset;
         },
         searchItemsCatalog: (state, action) => {
+            console.log(action)
+            const { payload, categorieActive  } = action.payload;
+            console.log( payload, categorieActive )
             state.itemCatalog = [];
-            state.search = action.payload;
+            state.search = payload;
+            state.categorieActive = categorieActive
         },
         searchItem: (state, action) => {
             state.id = action.payload;

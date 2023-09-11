@@ -6,10 +6,13 @@ import { searchItemsCatalog } from '../redux/slice/catalogListSlice';
 
 export const Header = () => {
     const { products } = useSelector(state => state.basketList);
+    let { categorieActive } = useSelector(state => state.categoriesList);
     const [valueSearch, setValue] = useState('');
     const [visible, setVisible] = useState(true);
+    
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    console.log(categorieActive)
 
     const handleChange = (e) => {
         const { value } = e.target;
@@ -18,7 +21,7 @@ export const Header = () => {
     
     const handleSearch = (e) => {
         e.preventDefault();
-        dispatch(searchItemsCatalog(valueSearch));
+        dispatch(searchItemsCatalog({payload: valueSearch, categorieActive }));
         setVisible(!visible);
         setValue('');
         navigate('./catalog');

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { Preloader } from './Preloader';
 import { categoriesChange, categoriesListRequest } from '../redux/slice/categoriesSlice';
@@ -7,9 +7,10 @@ import { Cart } from './Cart';
 import { Error } from './Error';
 
 export const Catalog = () => {
-    const { itemCategories, loadingCategories, errorCategories, categorieActive } = useSelector(state => state.categoriesList);
-    const { itemCatalog, loadingCatalog, errorCatalog, itemLength } = useSelector(state => state.catalogList);
+    let { itemCategories, loadingCategories, errorCategories, categorieActive} = useSelector(state => state.categoriesList);
+    let { itemCatalog, loadingCatalog, errorCatalog, itemLength, offset } = useSelector(state => state.catalogList);
     const dispatch = useDispatch(); 
+    
 
     console.log(itemCatalog)
     useEffect(() => {
@@ -18,11 +19,14 @@ export const Catalog = () => {
 
     const handleChange = (id, e) => {
         e.preventDefault();
+        offset = 0;
         dispatch(categoriesChange(id));
     }
     
     const handleGetMoreItems = () => {
-        dispatch(getMore(categorieActive));
+        offset += 6;
+        console.log(categorieActive, offset)
+        dispatch(getMore({payload: categorieActive, offset}));
     }
 
     return (
@@ -30,8 +34,8 @@ export const Catalog = () => {
             {loadingCategories ? <Preloader/> : <ul className="catalog-categories nav justify-content-center">
                 {itemCategories.map(categorie => {
                     return(
-                        <li className="nav-item" id={categorie.id}>
-                            <a className={categorie.id === categorieActive ? 'nav-link active': 'nav-link'} to="#" onClick={(e) => handleChange(categorie.id, e)}>{categorie.title}</a>
+                        <li className="nav-item" key={categorie.id}>
+                            <a className={categorie.id === categorieActive ? 'nav-link active': 'nav-link'} href="#" onClick={(e) => handleChange(categorie.id, e)}>{categorie.title}</a>
                         </li>
                     )
                 })}
@@ -39,7 +43,7 @@ export const Catalog = () => {
             {errorCategories || errorCatalog && <Error/>}
             {loadingCatalog ? <Preloader/> : <div className='row'>
                 {itemCatalog.map(item => (
-                    <Cart item={item}/>
+                    <Cart item={item} key={item.id}/>
                 ))}
             </div>}
             {itemLength > 5 && <div className="text-center">

@@ -34,16 +34,16 @@ export const getCatalog = async (id) => {
     return await response.json();
 }
 
-export const getMoreItems = async (id) => {
-    const response = await fetch(`${url}/items?categoryId=${id}&offset=6`);
+export const getMoreItems = async (id, offset) => {
+    const response = await fetch(`${url}/items?categoryId=${id}&offset=${offset}`);
     if (!response.ok) {
         throw new Error(response.statusText);
     }
     return await response.json();
 }
 
-export const searchItems = async (value) => {
-    const response = await fetch(`${url}/items?q=${value}`);
+export const searchItems = async (value, categorie) => {
+    const response = await fetch(`${url}/items?q=${value}&categoryId=${categorie}`);
     if (!response.ok) {
         throw new Error(response.statusText);
     }
@@ -69,11 +69,11 @@ export const sendOrder = async (order) => {
         if ((await response).ok) {
             return (await response).ok;
         } else {
-            return (await response).statusText;
+            throw new Error(response.statusText);;
         }
         
     } catch (error) {
-        console.log('Failed to send request:', error);
+        throw new Error(error);
     }
     
    

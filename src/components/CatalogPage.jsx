@@ -6,14 +6,18 @@ import { searchItemsCatalog } from "../redux/slice/catalogListSlice";
 
 
 export const CatalogPage = () => {
-    const { search } = useSelector(state => state.catalogList)
+    const { search } = useSelector(state => state.catalogList);
+    let { categorieActive } = useSelector(state => state.categoriesList);
     const [valueSearch, setValue] = useState(search);
     const dispatch = useDispatch();
      
     useEffect(() => {
-        dispatch(searchItemsCatalog(valueSearch));
-    }, []);
+        dispatch(searchItemsCatalog({payload: valueSearch, categorieActive }));
+    }, [valueSearch]);
 
+    useEffect(() => {
+        dispatch(searchItemsCatalog({payload: valueSearch, categorieActive }));
+    }, [valueSearch]);
 
     const handleChange = (event) => {
         const { value } = event.target;
@@ -22,7 +26,7 @@ export const CatalogPage = () => {
 
     const handleSearch = (e) => {
         e.preventDefault();
-        dispatch(searchItemsCatalog(valueSearch));
+        dispatch(searchItemsCatalog({payload: valueSearch, categorieActive }));
     }
 
     return (

@@ -30,7 +30,7 @@ export const Main = () => {
                             { hitList.loading ? <Preloader/> : 
                                 <div className="row">
                                     { hitList.items.map((item) => (
-                                       <Cart item={item}/>
+                                       <Cart item={item} key={item.id}/>
                                     ))}
                                 </div>
                             }

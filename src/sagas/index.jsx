@@ -81,7 +81,7 @@ function* watchCatalogIdSaga() {
 
 function* handleGetMoreSaga(action) {
     try {
-        const data = yield getMoreItems(action.payload);
+        const data = yield getMoreItems(action.payload.payload, action.payload.offset);
         yield put(catalogListSuccess(data));
     } catch (e) {
         yield put(catalogListFailure(e.message));
@@ -94,7 +94,7 @@ function* watchGetMoreSaga() {
 
 function* handleSearchItemsSaga(action) {
     try {
-        const data = yield searchItems(action.payload);
+        const data = yield searchItems(action.payload.payload, action.payload.categorieActive);
         yield put(catalogListSuccess(data));
     } catch (e) {
         yield put(catalogListFailure(e.message));

@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { searchItem } from '../redux/slice/catalogListSlice';
 import { Preloader } from './Preloader';
-import { addProduct } from './BasketStorage';
+import BasketStorage from './BasketStorage';
 
 
 export const CartPage = () => {
@@ -43,7 +43,7 @@ export const CartPage = () => {
             id: item.id,
             amount
         }
-        addProduct(product);
+        BasketStorage.addProduct(product);
         navigate('/cart');
     }
 
@@ -98,7 +98,7 @@ export const CartPage = () => {
                                                 {item?.sizes.map(size => {
                                                     if(size.available) {
                                                         return (
-                                                            <span className={selected.selectedSize ? "catalog-item-size selected" : "catalog-item-size"} onClick={()=> handleSelected(size.size)}>{size.size}</span>
+                                                            <span key={item.id} className={selected.selectedSize ? "catalog-item-size selected" : "catalog-item-size"} onClick={()=> handleSelected(size.size)}>{size.size}</span>
                                                         )
                                                     }
                                                 })}
