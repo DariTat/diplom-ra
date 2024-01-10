@@ -34,11 +34,11 @@ export const Header = () => {
                 <div className="row">
                     <div className="col">
                         <nav className="navbar navbar-expand-sm navbar-light bg-light">
-                            <NavLink to='/'><img src={logo} alt="Bosa Noga"/></NavLink>
+                            <NavLink to='/diplom-ra'><img src={logo} alt="Bosa Noga"/></NavLink>
                             <div className="collapase navbar-collapse" id="navbarMain">
                                 <ul className="navbar-nav mr-auto">
                                     <li className="nav-item">
-                                    <NavLink to='/' className="nav-link">Главная</NavLink>
+                                    <NavLink to='/diplom-ra' className="nav-link">Главная</NavLink>
                                     </li>
                                     <li className="nav-item">
                                     <NavLink className="nav-link" to='/catalog' href="/catalog.html">Каталог</NavLink>

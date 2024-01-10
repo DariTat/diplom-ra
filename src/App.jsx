@@ -19,7 +19,7 @@ function App() {
       <Router>
         <Header/>
         <Routes>
-          <Route path='/' element={<Main/>}/>
+          <Route path='/diplom-ra' element={<Main/>}/>
           <Route path='/about' element={<About/>}/>
           <Route path='/contacts' element={<Contacts/>}/>
           <Route path='/catalog' element={<CatalogPage/>}/>

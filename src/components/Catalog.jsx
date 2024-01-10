@@ -11,8 +11,6 @@ export const Catalog = () => {
     let { itemCatalog, loadingCatalog, errorCatalog, itemLength, offset } = useSelector(state => state.catalogList);
     const dispatch = useDispatch(); 
     
-
-    console.log(itemCatalog)
     useEffect(() => {
         dispatch(categoriesListRequest());
     }, [dispatch]);
@@ -25,7 +23,6 @@ export const Catalog = () => {
     
     const handleGetMoreItems = () => {
         offset += 6;
-        console.log(categorieActive, offset)
         dispatch(getMore({payload: categorieActive, offset}));
     }
 
