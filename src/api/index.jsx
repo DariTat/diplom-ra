@@ -1,5 +1,6 @@
 
-const url = ' http://localhost:7070/api';
+// const url = ' http://localhost:7070/api';
+const url = 'https://shoes-shop-ogut.onrender.com/api'
 
 export const getHitList = async () => {
     const response = await fetch(`${url}/top-sales`);

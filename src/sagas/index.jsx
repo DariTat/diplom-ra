@@ -110,7 +110,7 @@ function* handleGetItemSaga(action) {
         const data = yield getItem(action.payload);
         yield put(searchSuccess(data));
     } catch (e) {
-        yield put(catalogListFailure(e.message));a
+        yield put(catalogListFailure(e.message));
     }
 }
 

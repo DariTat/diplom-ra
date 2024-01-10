@@ -53,7 +53,7 @@ export const Basket = () => {
     
     if (success) {
         BasketStorage.clear();
-        return(
+        return (
             <div className='order_success'>Заказ успешно оформлен</div>
         )
     }
